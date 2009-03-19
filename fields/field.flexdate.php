@@ -124,7 +124,7 @@
 				$value = DateTimeObj::get(__SYM_DATETIME_FORMAT__, null);
 			}
 			
-			$label = Widget::Label($this->get('label'));
+			$label = Widget::Label($this->get('label') . ': ' . $value);
 			$input = Widget::Input(
 				"fields{$prefix}[{$handle}]{$postfix}", $value
 			);
@@ -170,6 +170,8 @@
 			$field_id = $this->get('id');
 			$current = null;
 			
+			header('content-type: text/plain');
+			
 			if (!empty($entry_id)) (integer)$current = $this->Database->fetchVar('local', 0, "
 				SELECT
 					f.local
@@ -178,6 +180,8 @@
 				WHERE
 					f.entry_id = '{$entry_id}'
 			");
+			
+			if (is_null($current)) $current = time();
 			
 			if ($data == '') {
 				$timestamp = $current;
@@ -221,6 +225,8 @@
 		public function buildDSRetrivalSQL($data, &$joins, &$where, $andOperation = false){
 			$parsed = array();
 			
+			header('content-type: text/plain');
+			
 			foreach ($data as $string) {
 				$type = $this->__parseFilter($string);
 				
@@ -230,19 +236,21 @@
 				
 				$parsed[$type][] = $string;
 			}
-
+			
 			foreach ($parsed as $type => $data) {
 				switch ($type) {
 					case self::RANGE:
+						//echo 'range';
 						$this->__buildRangeFilterSQL($data, $joins, $where, $andOperation);
 						break;
 						
 					case self::SIMPLE:
 						$this->__buildSimpleFilterSQL($data, $joins, $where, $andOperation);
+						//var_dump($where);
 						break;
 				}
 			}
-			
+			//exit;
 			return true;
 		}
 		
@@ -258,11 +266,11 @@
 					$this->_key++;
 					$joins .= "
 						LEFT JOIN
-							`tbl_entries_data_{$field_id}` AS t{$field_id}{$this->_key}
-							ON (e.id = t{$field_id}{$this->_key}.entry_id)
+							`tbl_entries_data_{$field_id}` AS t{$field_id}_{$this->_key}
+							ON (e.id = t{$field_id}_{$this->_key}.entry_id)
 					";
 					$where .= "
-						AND DATE_FORMAT(t{$field_id}{$this->_key}.value, '%Y-%m-%d') = '{$value}'
+						AND DATE_FORMAT(t{$field_id}_{$this->_key}.value, '%Y-%m-%d') = '{$value}'
 					";
 				}
 				
@@ -271,11 +279,11 @@
 				$value = html_entity_decode(@implode("', '", $data));
 				$joins .= "
 					LEFT JOIN
-						`tbl_entries_data_{$field_id}` AS t{$field_id}{$this->_key}
-						ON (e.id = t{$field_id}{$this->_key}.entry_id)
+						`tbl_entries_data_{$field_id}` AS t{$field_id}_{$this->_key}
+						ON (e.id = t{$field_id}_{$this->_key}.entry_id)
 				";
 				$where .= "
-					AND DATE_FORMAT(t{$field_id}{$this->_key}.value, '%Y-%m-%d') IN ('{$value}')
+					AND DATE_FORMAT(t{$field_id}_{$this->_key}.value, '%Y-%m-%d') IN ('{$value}')
 				";
 			}
 		}
@@ -291,13 +299,13 @@
 					$end = DateTimeObj::get('Y-m-d', strtotime($values['end']));
 					$joins .= "
 						LEFT JOIN
-							`tbl_entries_data_{$field_id}` AS t{$field_id}{$this->key}
-							ON e.id = t{$field_id}{$this->key}.entry_id
+							`tbl_entries_data_{$field_id}` AS t{$field_id}_{$this->key}
+							ON e.id = t{$field_id}_{$this->key}.entry_id
 					";
 					$where .= "
 						AND (
-							DATE_FORMAT(t{$field_id}{$this->key}.value, '%Y-%m-%d') >= '{$start}' 
-							AND DATE_FORMAT(t$field_id{$this->key}.value, '%Y-%m-%d') <= '{$end}'
+							DATE_FORMAT(t{$field_id}_{$this->key}.value, '%Y-%m-%d') >= '{$start}' 
+							AND DATE_FORMAT(t{$field_id}_{$this->key}.value, '%Y-%m-%d') <= '{$end}'
 						)
 					";
 					
@@ -313,8 +321,8 @@
 					
 					$tmp[] = "
 						(
-							DATE_FORMAT(t{$field_id}{$this->key}.value, '%Y-%m-%d') >= '{$start}' 
-							AND DATE_FORMAT(t{$field_id}{$this->key}.value, '%Y-%m-%d') <= '{$end}'
+							DATE_FORMAT(t{$field_id}_{$this->key}.value, '%Y-%m-%d') >= '{$start}' 
+							AND DATE_FORMAT(t{$field_id}_{$this->key}.value, '%Y-%m-%d') <= '{$end}'
 						)
 					";
 				}
@@ -322,8 +330,8 @@
 				$tmp = @implode(' OR ', $tmp);
 				$joins .= "
 					LEFT JOIN
-						`tbl_entries_data_{$field_id}` AS t{$field_id}{$this->key}
-						ON e.id = t{$field_id}{$this->key}.entry_id
+						`tbl_entries_data_{$field_id}` AS t{$field_id}_{$this->key}
+						ON e.id = t{$field_id}_{$this->key}.entry_id
 				";
 				$where .= " AND ({$tmp}) ";
 				

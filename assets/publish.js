@@ -84,7 +84,7 @@
 	$(document).ready(function() {
 		var formats = [
 			{
-				name:		'plus',
+				name:		'add',
 				format:		'+{1} {2}',
 				options:	[
 					{
@@ -111,7 +111,7 @@
 				]
 			},
 			{
-				name:		'minus',
+				name:		'take',
 				format:		'-{1} {2}',
 				options:	[
 					{
@@ -138,45 +138,14 @@
 				]
 			},
 			{
-				name:		'this',
-				format:		'this {1}',
+				name:		'skip to',
+				format:		'{1} {2}',
 				options:	[
 					{
-						'monday':		'monday',
-						'tuesday':		'tuesday',
-						'wednesday':	'wednesday',
-						'thursday':		'thursday',
-						'friday':		'friday',
-						'saturday':		'saturday',
-						'sunday':		'sunday',
-						'week':			'week',
-						'month':		'month',
-						'year':			'year'
-					}
-				]
-			},
-			{
-				name:		'next',
-				format:		'next {1}',
-				options:	[
-					{
-						'monday':		'monday',
-						'tuesday':		'tuesday',
-						'wednesday':	'wednesday',
-						'thursday':		'thursday',
-						'friday':		'friday',
-						'saturday':		'saturday',
-						'sunday':		'sunday',
-						'week':			'week',
-						'month':		'month',
-						'year':			'year'
-					}
-				]
-			},
-			{
-				name:		'previous',
-				format:		'previous {1}',
-				options:	[
+						'this':			'this',
+						'next':			'next',
+						'last':			'last'
+					},
 					{
 						'monday':		'monday',
 						'tuesday':		'tuesday',

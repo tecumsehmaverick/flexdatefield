@@ -1,7 +1,7 @@
 Field: Flex Date
 -------------------------------------------------------------------------------
 
-Version: 1.003
+Version: 1.004
 Author: Rowan Lewis <rowan@pixelcarnage.com>
 Build Date: 19 March 2009
 Requirements: 2.0.1

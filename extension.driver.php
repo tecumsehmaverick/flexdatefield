@@ -10,7 +10,7 @@
 		public function about() {
 			return array(
 				'name'			=> 'Field: Flex Date',
-				'version'		=> '1.003',
+				'version'		=> '1.004',
 				'release-date'	=> '2009-03-19',
 				'author'		=> array(
 					'name'			=> 'Rowan Lewis',
