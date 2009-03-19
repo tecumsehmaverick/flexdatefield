@@ -174,8 +174,8 @@
 				]
 			},
 			{
-				name:		'last',
-				format:		'last {1}',
+				name:		'previous',
+				format:		'previous {1}',
 				options:	[
 					{
 						'monday':		'monday',
