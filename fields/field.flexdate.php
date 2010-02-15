@@ -8,6 +8,8 @@
 		const RANGE = 3;
 		const ERROR = 4;
 		
+		protected $_driver = null;
+		
 	/*-------------------------------------------------------------------------
 		Definition:
 	-------------------------------------------------------------------------*/
@@ -16,6 +18,7 @@
 			parent::__construct($parent);
 			
 			$this->_name = 'Flex Date';
+			$this->_driver = $this->_engine->ExtensionManager->create('flexdatefield');
 		}
 		
 		public function createTable() {
