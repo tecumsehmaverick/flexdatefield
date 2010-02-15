@@ -108,9 +108,7 @@
 	-------------------------------------------------------------------------*/
 		
 		public function displayPublishPanel(&$wrapper, $data = null, $error = null, $prefix = null, $postfix = null) {
-			$this->_engine->Page->addScriptToHead(URL . '/extensions/flexdatefield/assets/jquery.js', 8251840);
-			$this->_engine->Page->addScriptToHead(URL . '/extensions/flexdatefield/assets/publish.js', 8251841);
-			$this->_engine->Page->addStylesheetToHead(URL . '/extensions/flexdatefield/assets/publish.css', 'screen', 8251840);
+			$this->_driver->addPublishHeaders($this->_engine->Page);
 			
 			$sortorder = $this->get('sortorder');
 			$handle = $this->get('element_name');

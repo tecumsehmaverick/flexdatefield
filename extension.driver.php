@@ -42,6 +42,21 @@
 			
 			$page->addStylesheetToHead(URL . '/extensions/flexdatefield/assets/publish.css', 'screen', 100);
 		}
+		
+	/*-------------------------------------------------------------------------
+		Utilites:
+	-------------------------------------------------------------------------*/
+		
+		protected $addedPublishHeaders = false;
+		
+		public function addPublishHeaders($page) {
+			if ($page and !$this->addedPublishHeaders) {
+				$page->addScriptToHead(URL . '/extensions/flexdatefield/assets/publish.js', 8251841);
+				$page->addStylesheetToHead(URL . '/extensions/flexdatefield/assets/publish.css', 'screen', 8251840);
+				
+				$this->addedPublishHeaders = true;
+			}
+		}
 	}
 	
 ?>
