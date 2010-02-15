@@ -11,9 +11,9 @@
 		self.optionsList = null;
 		
 		self.chooseFormat = function() {
-			var name = $(this).text();
+			var name = jQuery(this).text();
 			
-			$.each(self.formats, function(index, current) {
+			jQuery.each(self.formats, function(index, current) {
 				if (current.name == name) {
 					self.format = current;
 					return false;
@@ -22,10 +22,10 @@
 			
 			if (self.format == null) return false;
 			
-			$.each(self.format.options, function(index, values) {
+			jQuery.each(self.format.options, function(index, values) {
 				var item = self.optionsList.append('<li></li>').find('li:last');
 				
-				$.each(values, function(name, value) {
+				jQuery.each(values, function(name, value) {
 					item.append('<span>' + name + '</span>');
 				});
 				
@@ -38,17 +38,17 @@
 		};
 		
 		self.chooseOption = function() {
-			var options = self.format.options[$(this).parent().prevAll().length];
-			var index = $(this).parent().prevAll().length;
-			var name = $(this).text();
+			var options = self.format.options[jQuery(this).parent().prevAll().length];
+			var index = jQuery(this).parent().prevAll().length;
+			var name = jQuery(this).text();
 			var complete = true;
 			var content = self.format.format;
 			
-			$(this).addClass('active');
+			jQuery(this).addClass('active');
 			
 			self.options[index] = options[name];
 			
-			$.each(self.options, function(index, value) {
+			jQuery.each(self.options, function(index, value) {
 				if (value == null) {
 					complete = false;
 					return false;
@@ -72,7 +72,7 @@
 		self.optionsList = self.field.find('.options');
 		
 		// Populate formats list:
-		$.each(self.formats, function(index, format) {
+		jQuery.each(self.formats, function(index, format) {
 			self.formatsList.append('<li><span>' + format.name + '</span></li>');
 		});
 		
@@ -81,7 +81,7 @@
 	
 /*----------------------------------------------------------------------------*/
 	
-	$(document).ready(function() {
+	jQuery(document).ready(function() {
 		var formats = [
 			{
 				name:		'add',
@@ -162,8 +162,8 @@
 			}
 		];
 		
-		$('.field-flexdate').each(function() {
-			new FlexDateField($(this), formats);
+		jQuery('.field-flexdate').each(function() {
+			new FlexDateField(jQuery(this), formats);
 		});
 	});
 	
