@@ -162,7 +162,7 @@
 			}
 		];
 		
-		$('.field-flexdate').each(function() {
+		$('div.field-flexdate').each(function() {
 			new FlexDateField($(this), formats);
 		});
 	});
